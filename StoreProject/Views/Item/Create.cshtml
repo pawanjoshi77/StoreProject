@@ -1,0 +1,40 @@
+﻿@model IEnumerable<StoreProject.Models.Store>
+@{
+    ViewBag.Title = "Create New Item";
+}
+
+<h2>Create your item</h2>
+
+<form method="post" action="/Item/Create">
+
+    <div class="input-row">
+        <label class="input-label">Item Name</label>
+        <input id="ItemName_New" name="ItemName_New" />
+    </div>
+    <div class="input-row">
+        <label class="input-label">Item Price</label>
+        <input id="ItemPrice_New" name="ItemPrice_New" />
+    </div>
+    <div class="input-row">
+        <label class="input-label">Store ID</label>
+        <input id="Store_StoreId_New" name="Store_StoreId_New" />
+    </div>
+    <!--<div class="input-row">
+        <label class="input-label">Store Name</label>
+        <select>
+            @foreach (var item in Model)
+            {
+
+                <option value="@item.StoreId">@item.StoreName</option>
+            }
+        </select>
+    </div>-->
+    <div class="submit">
+        <input type="submit" value="Create" />
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</form>
+
