@@ -17,6 +17,6 @@ namespace StoreProject.Models
         [Required, Display (Name ="Item Price")]
         public float ItemPrice { get; set; }
 
-        public virtual Store Store { get; set; }
+        public virtual ICollection<StorexItem> storexitems { get; set; }
     }
 }

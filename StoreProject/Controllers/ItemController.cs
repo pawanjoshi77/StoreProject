@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
 using StoreProject.Models;
-using System.Data.SqlClient;
+//including this for the extra definition
+//using StoreProject.Models.ViewModels;
+using System.Diagnostics;
 
 namespace StoreProject.Controllers
 {
@@ -15,8 +20,22 @@ namespace StoreProject.Controllers
         // GET: Item
         public ActionResult Index()
         {
-            return View(db.Items.ToList()); 
+            return RedirectToAction("List");
+            
         }
+        public ActionResult List()
+        {
+            /*
+            Alternate
+            IEnumerable<Tag> tags = db.Tags.ToList();
+            */
+
+            string query = "select * from Items";
+            IEnumerable<Item> items = db.Items.FromSql(query);
+
+            return View(items);
+        }
+
 
         public ActionResult Create()
         {
@@ -35,7 +54,21 @@ namespace StoreProject.Controllers
 
             db.Database.ExecuteSqlCommand(query, myparams);
 
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Items.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return View(item);
         }
 
     }
